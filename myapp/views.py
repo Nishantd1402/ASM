@@ -311,10 +311,6 @@ def student_register(request):
 
         # Validate that all fields are filled
         if all([first_name, last_name, prn, email, year, department_name, roll_number, mobile_number]):
-            # Check for duplicate entries
-            if Student.objects.filter(prn=prn).exists():
-                messages.error(request, "A student with this PRN or Email already exists.")
-            else:
                 try:
 
                     department = Department.objects.get(dept_name=department_name)
