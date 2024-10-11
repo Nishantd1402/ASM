@@ -19,4 +19,5 @@ urlpatterns = [
     path('register/', views.student_register, name='register'),
     path('success/' , views.success , name="success"),
     path('view-draws/', views.view_draws, name='view_draws'),
+    path('data' , views.data , name ='excel data'),
 ]

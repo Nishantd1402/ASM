@@ -346,3 +346,39 @@ def student_register(request):
     }
 
     return render(request, 'myapp/register.html' , context)
+
+def data(request):
+    # Create a new Excel workbook and active worksheet
+    wb = openpyxl.Workbook()
+    ws = wb.active
+    ws.title = 'Students'
+
+    # Define the headers for the Excel file
+    headers = ['First Name', 'Last Name', 'Email', 'PRN', 'Department', 'Year' , 'Event' , "Roll_Number", "Mobile Number"]
+    ws.append(headers)  # Add headers to the first row
+
+    # Fetch all Student records from the database
+    students = Student.objects.all()
+
+    # Add student data to the Excel sheet
+    for student in students:
+        ws.append([
+            student.first_name,
+            student.last_name,
+            student.email,
+            student.prn,
+            student.department.dept_name,  # Convert the Department object to its name or relevant attribute
+            student.year,
+            student.event,
+            student.roll_number,
+            student.mobile_number,
+        ])
+
+    # Prepare the HTTP response with content type and headers
+    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = 'attachment; filename=students.xlsx'
+
+    # Save the workbook to the response
+    wb.save(response)
+
+    return response
