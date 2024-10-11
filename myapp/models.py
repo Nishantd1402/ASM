@@ -30,8 +30,8 @@ class Student(models.Model):
     first_name = models.CharField(max_length=100)
     middle_name = models.CharField(max_length=100, blank=True, null=True)  # Optional field
     last_name = models.CharField(max_length=100)
-    prn = models.CharField(max_length=20, unique=True)
-    email = models.EmailField(unique=True)
+    prn = models.CharField(max_length=20)
+    email = models.EmailField()
     event = models.CharField(max_length=50)
     year = models.CharField(max_length=10, choices=[
         ('2nd', 'SY'),
@@ -39,7 +39,7 @@ class Student(models.Model):
         ('4th', 'B.Tech'),
     ])
     department = models.ForeignKey(Department, on_delete=models.CASCADE)  # ForeignKey relationship to Department
-    roll_number = models.CharField(max_length=20, unique=True)
+    roll_number = models.CharField(max_length=20)
     mobile_number = models.CharField(max_length=15)
 
     def __str__(self):
